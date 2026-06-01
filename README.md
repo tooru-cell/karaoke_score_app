@@ -260,15 +260,17 @@
 
 ### 10-1. 使用予定の技術
 
-- フレームワーク：Ruby on Rails
-- DB：PostgreSQL
+- フレームワーク：Ruby on Rails 7.0.3.1
+- DB：PostgreSQL 16
+- 開発環境：Docker 28.4.0
 - デプロイ先：Render
-- 使用予定ライブラリ：
 
- - Sorcery
- - Ransack
- - Kaminari
- - Active Storage
+#### 使用予定ライブラリ
+
+- Sorcery 0.16.3
+- Ransack 3.2.1
+- Kaminari 1.2.2
+- Active Storage
 
 ---
 
