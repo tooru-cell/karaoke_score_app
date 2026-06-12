@@ -1,3 +1,7 @@
+### 画面遷移図
+
+Figma:https://www.figma.com/design/DHmLTcqV3M4yYNdquOVVeG/%E7%84%A1%E9%A1%8C?node-id=0-1&p=f&t=ZExrZoWipdAILHbe-0
+
 ## 1. サービス概要
 
 - このサービスはどんなサービスか
@@ -311,7 +315,3 @@
 また、AI分析機能についても、分析内容の精度やプロンプト設計など学習が不足している部分が多いため、まずはMVPとして記録・検索・比較機能を優先し、その後徐々に実装したい。
 
 そのため、OCRやAI分析は本リリースでの追加機能として考えている。
-
-### 画面遷移図
-
-https://www.figma.com/design/DHmLTcqV3M4yYNdquOVVeG/%E7%84%A1%E9%A1%8C?node-id=0-1&p=f&t=ZExrZoWipdAILHbe-0
