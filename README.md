@@ -2,6 +2,10 @@
 
 Figma:https://www.figma.com/design/DHmLTcqV3M4yYNdquOVVeG/%E7%84%A1%E9%A1%8C?node-id=0-1&p=f&t=ZExrZoWipdAILHbe-0
 
+### ER図
+
+https://gyazo.com/f463605d8b3dd158a2741727faf4de1a
+
 ## 1. サービス概要
 
 - このサービスはどんなサービスか
