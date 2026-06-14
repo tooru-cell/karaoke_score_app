@@ -4,7 +4,7 @@ Figma:https://www.figma.com/design/DHmLTcqV3M4yYNdquOVVeG/%E7%84%A1%E9%A1%8C?nod
 
 ### ER図
 
-https://gyazo.com/f463605d8b3dd158a2741727faf4de1a
+https://gyazo.com/45814e5cb4c9dfd4508b14a960ec1557
 
 ## 1. サービス概要
 
