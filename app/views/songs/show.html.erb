@@ -1,0 +1,48 @@
+<h1><%= @song.title %></h1>
+
+<p>
+  アーティスト：
+  <%= @song.artist.name %>
+</p>
+
+<p>
+  最高点：
+  <%= @highest_score %>
+</p>
+
+<p>
+  平均点：
+  <%= @average_score&.round(3) %>
+</p>
+
+<p>
+  歌唱回数：
+  <%= @sing_count %>回
+</p>
+
+<% if @difference %>
+  <p>
+    前回との差：
+    <%= @difference > 0 ? "+" : "" %><%= @difference.round(3) %>
+  </p>
+<% end %>
+
+<hr>
+
+<h2>履歴</h2>
+
+<table>
+  <tr>
+    <th>日付</th>
+    <th>点数</th>
+  </tr>
+
+  <% @scores.each do |score| %>
+    <tr>
+      <td><%= score.sung_at %></td>
+      <td>
+        <%= link_to score.score, karaoke_score_path(score) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

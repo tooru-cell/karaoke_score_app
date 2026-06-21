@@ -1,0 +1,28 @@
+<h1>採点履歴</h1>
+
+<%= link_to "新規登録", new_karaoke_score_path %>
+
+<p>
+  <%= sort_link(@q, :score, "点数順") %> |
+  <%= sort_link(@q, :sung_at, "歌唱日順") %>
+</p>
+
+<table>
+  <tr>
+    <th>曲名</th>
+    <th>点数</th>
+    <th>日付</th>
+  </tr>
+
+  <% @karaoke_scores.each do |score| %>
+    <tr>
+      <td><%= score.song.artist.name   %></td>
+
+      <td>
+        <%= link_to score.song.title, song_path(score.song) %>
+    </td>
+      <td><%= score.score %></td>
+      <td><%= score.sung_at %></td>
+    </tr>
+  <% end %>
+</table>

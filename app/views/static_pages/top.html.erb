@@ -1,2 +1,16 @@
 <h1>カラオケ採点記録アプリ</h1>
-<p>仮トップページ</p>
+
+<%= link_to "新規登録", new_user_path %>
+<%= link_to "ログイン", login_path %>
+<% if current_user %>
+  <p>ログイン中: <%= current_user.name %></p>
+<% end %>
+<% if current_user %>
+  <p>ログイン中: <%= current_user.name %></p>
+
+  <%= button_to "ログアウト",
+      logout_path,
+      method: :delete %>
+<% end %>
+
+<%= link_to "採点履歴", karaoke_scores_path %>

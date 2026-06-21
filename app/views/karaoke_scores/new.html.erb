@@ -1,0 +1,39 @@
+<h1>採点結果登録</h1>
+
+<%= form_with model: @karaoke_score do |f| %>
+  <div>
+  <%= f.label :score_image, "採点画像" %>
+  <%= f.file_field :score_image %>
+  </div>
+
+  <div>
+    <%= f.label :song_id, "曲" %>
+    <div>
+        <%= f.label :artist_name, "アーティスト名" %>
+        <%= f.text_field :artist_name %>
+    </div>
+
+    <div>
+        <%= f.label :song_title, "曲名" %>
+        <%= f.text_field :song_title %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :score, "点数" %>
+    <%= f.number_field :score, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.label :sung_at, "歌唱日" %>
+    <%= f.date_field :sung_at %>
+  </div>
+
+  <div>
+    <%= f.label :memo, "メモ" %>
+    <%= f.text_area :memo %>
+  </div>
+
+  <%= f.submit "登録" %>
+
+<% end %>
