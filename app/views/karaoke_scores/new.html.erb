@@ -21,7 +21,7 @@
 
   <div>
     <%= f.label :score, "点数" %>
-    <%= f.number_field :score, step: 0.01 %>
+    <%= f.number_field :score, step: 0.001, min: 0, max: 100 %>
   </div>
 
   <div>

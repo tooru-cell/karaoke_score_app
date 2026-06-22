@@ -8,7 +8,11 @@ class KaraokeScore < ApplicationRecord
 
   before_validation :set_song_from_names
 
-  validates :score, presence: true
+  validates :score, presence: true,
+                  numericality: {
+                    greater_than_or_equal_to: 0,
+                    less_than_or_equal_to: 100
+                  }
   validates :sung_at, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
