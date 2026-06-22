@@ -5,10 +5,12 @@
 <p>
   <%= sort_link(@q, :score, "点数順") %> |
   <%= sort_link(@q, :sung_at, "歌唱日順") %>
+  <%= sort_link(@q, :song_title, "曲名順") %>
 </p>
 
 <table>
   <tr>
+    <th>アーティスト名</th>
     <th>曲名</th>
     <th>点数</th>
     <th>日付</th>

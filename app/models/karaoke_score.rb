@@ -25,6 +25,10 @@ class KaraokeScore < ApplicationRecord
     ]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    %w[song user]
+  end
+
   private
 
   def set_song_from_names

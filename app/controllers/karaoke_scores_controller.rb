@@ -2,7 +2,7 @@ class KaraokeScoresController < ApplicationController
   before_action :require_login
   def index
     @q = current_user.karaoke_scores.ransack(params[:q])
-    @karaoke_scores = @q.result(distinct: true)
+    @karaoke_scores = @q.result
   end
 
   def new
