@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      karaoke_score: 採点結果
+
+    attributes:
+      karaoke_score:
+        sung_at: "歌唱日"
+        score: "点数"
+        song: "曲"
+        artist_name: "アーティスト名"
+        song_title: "曲名"

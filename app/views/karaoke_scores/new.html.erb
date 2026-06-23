@@ -1,6 +1,17 @@
 <h1>採点結果登録</h1>
 
 <%= form_with model: @karaoke_score do |f| %>
+    <% if @karaoke_score.errors.any? %>
+    <div>
+    <h2>入力内容にエラーがあります</h2>
+
+    <ul>
+    <% @karaoke_score.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+    <% end %>
+    </ul>
+    </div>
+    <% end %>
   <div>
   <%= f.label :score_image, "採点画像" %>
   <%= f.file_field :score_image %>

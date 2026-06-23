@@ -8,6 +8,8 @@ class KaraokeScore < ApplicationRecord
 
   before_validation :set_song_from_names
 
+  validate :sung_at_cannot_be_in_the_future
+
   validates :score, presence: true,
                   numericality: {
                     greater_than_or_equal_to: 0,
@@ -35,6 +37,14 @@ class KaraokeScore < ApplicationRecord
 
   private
 
+  def sung_at_cannot_be_in_the_future
+    return if sung_at.blank?
+
+    if sung_at > Date.current
+        errors.add(:sung_at, "に未来の日付は選択できません")
+    end
+  end
+
   def set_song_from_names
     return if artist_name.blank? && song_title.blank?
 
@@ -55,4 +65,5 @@ class KaraokeScore < ApplicationRecord
       artist: artist
     )
   end
+  
 end
