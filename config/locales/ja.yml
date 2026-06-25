@@ -14,6 +14,10 @@ ja:
         sung_at: "歌唱日"
         memo: "メモ"
         score_image: "採点画像"
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        password: "パスワード"        
 
     errors:
       models:
@@ -25,6 +29,9 @@ ja:
   errors:
     messages:
       blank: "を入力してください"
+      too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
+      taken: "は既に使用されています"
       not_a_number: "は数値で入力してください"
       greater_than_or_equal_to: "は%{count}以上で入力してください"
       less_than_or_equal_to: "は%{count}以下で入力してください"
