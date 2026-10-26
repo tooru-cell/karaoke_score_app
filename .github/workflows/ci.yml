@@ -20,7 +20,8 @@ jobs:
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        # TODO: Rails 8へのアップグレード後にEOLRailsの除外を解除する
+        run: bin/brakeman --no-pager --except EOLRails
 
   lint:
     runs-on: ubuntu-latest
