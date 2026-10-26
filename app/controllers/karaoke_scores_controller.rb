@@ -1,8 +1,9 @@
 class KaraokeScoresController < ApplicationController
   before_action :require_login
+  before_action :set_karaoke_score, only: %i[show edit update destroy]
   def index
     @q = current_user.karaoke_scores.ransack(params[:q])
-    @karaoke_scores = @q.result
+    @karaoke_scores = @q.result.includes(song: :artist)
   end
 
   def new
@@ -20,18 +21,14 @@ class KaraokeScoresController < ApplicationController
   end
 
   def show
-    @karaoke_score = current_user.karaoke_scores.find(params[:id])
   end
 
   def edit
-    @karaoke_score = current_user.karaoke_scores.find(params[:id])
     @karaoke_score.artist_name = @karaoke_score.song.artist.name
     @karaoke_score.song_title = @karaoke_score.song.title
   end
 
   def update
-    @karaoke_score = current_user.karaoke_scores.find(params[:id])
-
     if @karaoke_score.update(karaoke_score_params)
       redirect_to @karaoke_score, notice: "採点結果を更新しました"
     else
@@ -40,13 +37,16 @@ class KaraokeScoresController < ApplicationController
   end
 
   def destroy
-    @karaoke_score = current_user.karaoke_scores.find(params[:id])
     @karaoke_score.destroy
 
     redirect_to karaoke_scores_path, notice: "採点結果を削除しました"
   end
 
   private
+
+  def set_karaoke_score
+    @karaoke_score = current_user.karaoke_scores.find(params[:id])
+  end
 
   def karaoke_score_params
     params.require(:karaoke_score).permit(
