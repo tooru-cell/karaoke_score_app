@@ -65,5 +65,4 @@ class KaraokeScore < ApplicationRecord
       artist: artist
     )
   end
-  
 end

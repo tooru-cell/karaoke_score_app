@@ -5,7 +5,7 @@ RSpec.describe "karaokescores", type: :request do
         before do
             user = FactoryBot.create(:user)
 
-            post login_path, params:{
+            post login_path, params: {
                 email: user.email,
                 password: "abc"
             }
@@ -25,7 +25,7 @@ RSpec.describe "karaokescores", type: :request do
 
 
         it "日付を空で送信した場合、karaokescoreが登録されないこと" do
-        expect{
+        expect {
             post karaoke_scores_path, params: {
             karaoke_score: {
                 artist_name: "aiko",
@@ -50,7 +50,7 @@ RSpec.describe "karaokescores", type: :request do
         expect(response).to redirect_to(karaoke_scores_path)
     end
     end
-    
+
     context "ログインしていない場合" do
     it "未ログインユーザーが採点結果を送信した場合、KaraokeScoreに登録されないこと" do
         expect {

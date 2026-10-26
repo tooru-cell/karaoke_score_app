@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   resources :karaoke_scores
-  resources :songs, only: [:show]
+  resources :songs, only: [ :show ]
 
   resources :users, only: %i[new create]
 
