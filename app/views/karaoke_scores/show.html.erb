@@ -1,0 +1,45 @@
+<h1>採点結果詳細</h1>
+
+<p>
+  曲名:
+  <%= @karaoke_score.song.title %>
+</p>
+
+<p>
+  アーティスト:
+  <%= @karaoke_score.song.artist.name %>
+</p>
+
+<p>
+  点数:
+  <%= @karaoke_score.score %>
+</p>
+
+<p>
+  歌唱日:
+  <%= @karaoke_score.sung_at %>
+</p>
+
+<p>
+  メモ:
+  <%= @karaoke_score.memo.presence || "なし" %>
+</p>
+
+<% if @karaoke_score.score_image.attached? %>
+  <h2>採点画像</h2>
+
+  <%= image_tag @karaoke_score.score_image, width: 500 %>
+<% end %>
+
+<%= link_to "編集", edit_karaoke_score_path(@karaoke_score) %>
+
+<%= link_to "削除",
+    karaoke_score_path(@karaoke_score),
+    data: {
+      turbo_method: :delete,
+      turbo_confirm: "削除しますか？"
+    } %>
+
+<p>
+  <%= link_to "一覧へ戻る", karaoke_scores_path %>
+</p>
