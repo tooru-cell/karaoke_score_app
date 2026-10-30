@@ -21,6 +21,11 @@
 </p>
 
 <p>
+  機種:
+  <%= @karaoke_score.karaoke_machine&.upcase || "未選択" %>
+</p>
+
+<p>
   メモ:
   <%= @karaoke_score.memo.presence || "なし" %>
 </p>

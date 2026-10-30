@@ -23,6 +23,7 @@
     <th>曲名</th>
     <th>点数</th>
     <th>日付</th>
+    <th>機種</th>
   </tr>
 
   <% @karaoke_scores.each do |score| %>
@@ -34,6 +35,7 @@
     </td>
       <td><%= score.score %></td>
       <td><%= score.sung_at %></td>
+      <td><%= score.karaoke_machine&.upcase || "未選択" %></td>
     </tr>
   <% end %>
 </table>
