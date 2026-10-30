@@ -14,4 +14,10 @@ class Song < ApplicationRecord
       updated_at
     ]
   end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[
+      artist
+    ]
+  end
 end
