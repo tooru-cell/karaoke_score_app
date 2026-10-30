@@ -35,6 +35,7 @@
   <tr>
     <th>日付</th>
     <th>点数</th>
+    <th>機種</th>
   </tr>
 
   <% @scores.each do |score| %>
@@ -43,6 +44,7 @@
       <td>
         <%= link_to score.score, karaoke_score_path(score) %>
       </td>
+      <td><%= score.karaoke_machine&.upcase || "未選択" %></td>
     </tr>
   <% end %>
 </table>

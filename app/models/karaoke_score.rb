@@ -17,6 +17,8 @@ class KaraokeScore < ApplicationRecord
                   }
   validates :sung_at, presence: true
 
+  enum :karaoke_machine, { dam: 0, joysound: 1 }
+
   def self.ransackable_attributes(auth_object = nil)
     %w[
       created_at

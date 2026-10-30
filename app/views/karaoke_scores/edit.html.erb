@@ -38,6 +38,11 @@
   </div>
 
   <div>
+    <%= f.label :karaoke_machine, "機種" %>
+    <%= f.select :karaoke_machine,[["DAM","dam"],["JOYSOUND","joysound"]],{include_blank:"選択してください"} %>
+  </div>
+
+  <div>
     <%= f.label :memo, "メモ" %>
     <%= f.text_area :memo %>
   </div>
