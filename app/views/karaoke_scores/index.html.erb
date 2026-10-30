@@ -2,6 +2,15 @@
 
 <%= link_to "新規登録", new_karaoke_score_path %>
 
+<%= search_form_for @q, url: karaoke_scores_path do |f| %>
+  <%= f.label :song_title_cont, "曲名検索" %>
+  <%= f.search_field :song_title_cont, placeholder: "曲名を入力" %>
+  <%= f.label :song_artist_name_cont, "アーティスト名で検索" %>
+  <%= f.search_field :song_artist_name_cont, placeholder: "アーティスト名を入力" %>
+  <%= f.submit "検索" %>
+<% end %>
+<%= link_to "クリア", karaoke_scores_path %>
+
 <p>
   <%= sort_link(@q, :score, "点数順") %> |
   <%= sort_link(@q, :sung_at, "歌唱日順") %> |
