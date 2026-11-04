@@ -1,0 +1,33 @@
+<h1>高得点ランキング</h1>
+<% rank = 1 %>
+<% previous_score = nil %>
+<% @max_ranking.each do |song_id, score| %>
+    <% if score != previous_score && previous_score != nil %>
+        <% rank += 1 %>
+    <% end %>
+    <% previous_score = score %>
+    <p><%= rank %>位:<%= @song_titles[song_id] %>：<%= score %>点</p>
+<% end %>
+
+<h1>得意曲ランキング</h1>
+<h2>平均点の高い楽曲を集計しています</h2>
+<% rank = 1 %>
+<% previous_score = nil %>
+<% @average_ranking.each do |song_id, score| %>
+    <% if score != previous_score && previous_score != nil %>
+      <% rank += 1 %>
+    <% end %>
+    <% previous_score = score %>
+    <p><%= rank %>位:<%= @song_titles[song_id] %>:<%= score.round(2) %>点</p>
+<% end %>
+<h1>歌唱回数ランキング</h1>
+<% rank = 1 %>
+<% previous_count = nil %>
+<% @count_ranking.each do |song_id,count| %>
+    <% if count != previous_count && previous_count != nil %>
+        <% rank += 1 %>
+    <% end %>
+    <% previous_count = count %>
+    <p><%= rank %>位:<%= @song_titles[song_id] %>:<%= count %>回</p>
+<% end %>
+<%= link_to "一覧へ戻る", karaoke_scores_path %>
