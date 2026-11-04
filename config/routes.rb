@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "/rankings", to: "rankings#index"
   root "static_pages#top"
 
   resources :karaoke_scores

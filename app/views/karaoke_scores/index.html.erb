@@ -1,6 +1,7 @@
 <h1>採点履歴</h1>
-
+<%= link_to "ランキング", rankings_path %>
 <%= link_to "新規登録", new_karaoke_score_path %>
+
 
 <%= search_form_for @q, url: karaoke_scores_path do |f| %>
   <%= f.label :song_title_cont, "曲名検索" %>
