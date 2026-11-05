@@ -1,42 +1,76 @@
-<h1>採点履歴</h1>
-<%= link_to "ランキング", rankings_path %>
-<%= link_to "新規登録", new_karaoke_score_path %>
+<div class="max-w-5xl mx-auto px-4 pt-8 pb-24 md:pb-8">
+<h1 class="text-3xl font-bold text-blue-600 mb-4">採点履歴</h1>
+<div class="flex flex-col sm:flex-row gap-3 mb-6">
+  <%= link_to "ランキング", rankings_path,
+      class: "inline-block text-center bg-white text-slate-700 border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-100 transition-colors" %>
 
+  <%= link_to "＋ 新規登録", new_karaoke_score_path,
+      class: "inline-block text-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+</div>
 
-<%= search_form_for @q, url: karaoke_scores_path do |f| %>
-  <%= f.label :song_title_cont, "曲名検索" %>
-  <%= f.search_field :song_title_cont, placeholder: "曲名を入力" %>
-  <%= f.label :song_artist_name_cont, "アーティスト名で検索" %>
-  <%= f.search_field :song_artist_name_cont, placeholder: "アーティスト名を入力" %>
-  <%= f.submit "検索" %>
-<% end %>
-<%= link_to "クリア", karaoke_scores_path %>
-
-<p>
-  <%= sort_link(@q, :score, "点数順") %> |
-  <%= sort_link(@q, :sung_at, "歌唱日順") %> |
-  <%= sort_link(@q, :song_title, "曲名順") %>
-</p>
-
-<table>
-  <tr>
-    <th>アーティスト名</th>
-    <th>曲名</th>
-    <th>点数</th>
-    <th>日付</th>
-    <th>機種</th>
-  </tr>
-
-  <% @karaoke_scores.each do |score| %>
-    <tr>
-      <td><%= score.song.artist.name   %></td>
-
-      <td>
-        <%= link_to score.song.title, song_path(score.song) %>
-    </td>
-      <td><%= score.score %></td>
-      <td><%= score.sung_at %></td>
-      <td><%= score.karaoke_machine&.upcase || "未選択" %></td>
-    </tr>
+<div class="bg-white rounded-xl border border-slate-200 p-5 mb-6">
+  <%= search_form_for @q, url: karaoke_scores_path do |f| %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      <div>
+        <%= f.label :song_title_cont, "曲名", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.search_field :song_title_cont, placeholder: "曲名を入力", class: "w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+      <div>
+        <%= f.label :song_artist_name_cont, "アーティスト名", class: "block text-sm font-medium text-slate-700 mb-2" %>
+        <%= f.search_field :song_artist_name_cont, placeholder: "アーティスト名を入力", class: "w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+    </div>
+    <div class="flex justify-end items-center gap-3">
+      <%= link_to "クリア", karaoke_scores_path, class:"text-sm text-slate-500 hover:text-slate-700" %>
+      <%= f.submit "検索", class: "bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 cursor-pointer" %>
+    </div>
   <% end %>
-</table>
+</div>
+
+
+<div class="flex flex-wrap items-center gap-2 mb-4">
+    <span class="text-sm font-medium text-slate-600 mr-2">
+      並び替え
+    </span>
+  
+  <%= sort_link(@q, :score, "点数順", class: "bg-white boder boder-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-colors") %> 
+  <%= sort_link(@q, :sung_at, "歌唱日順", class: "bg-white boder boder-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-colors") %> 
+  <%= sort_link(@q, :song_title, "曲名順", class: "bg-white boder boder-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-colors") %>
+</div>
+
+<div class="space-y-3">
+  <% @karaoke_scores.each do |score| %>
+    <div class="bg-white border border-slate-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+
+      <div class="flex items-center justify-between gap-4">
+        <div class="min-w-0">
+          <%= link_to score.song.title, song_path(score.song),
+              class: "block font-semibold text-slate-800 hover:text-blue-600 break-words" %>
+
+          <p class="text-sm text-slate-500 mt-1">
+            <%= score.song.artist.name %>
+          </p>
+        </div>
+
+        <div class="text-right shrink-0">
+          <span class="text-xl font-bold text-blue-600">
+            <%= score.score %>
+          </span>
+          <span class="text-sm text-slate-500">点</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
+        <span class="text-sm text-slate-500">
+          <%= score.sung_at %>
+        </span>
+
+        <span class="text-xs font-medium bg-blue-50 text-blue-700 px-3 py-1 rounded-full">
+          <%= score.karaoke_machine&.upcase || "未選択" %>
+        </span>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+</div>
