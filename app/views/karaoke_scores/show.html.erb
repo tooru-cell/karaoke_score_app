@@ -1,50 +1,79 @@
-<h1>採点結果詳細</h1>
+<div class="max-w-3xl mx-auto px-4 pt-8 pb-24 md:pb-8">
+  <h1 class="text-2xl font-bold text-slate-800 mb-6">
+    採点結果詳細
+  </h1>
+<div class="bg-white border border-slate-200 rounded-xl p-6 mb-6">
 
-<p>
-  曲名:
-  <%= @karaoke_score.song.title %>
-</p>
 
-<p>
-  アーティスト:
-  <%= @karaoke_score.song.artist.name %>
-</p>
 
-<p>
-  点数:
-  <%= @karaoke_score.score %>
-</p>
+  <div class="border-b border-slate-100 pb-4 mb-5">
+    <h2 class="text-xl font-bold text-slate-800">
+      <%= @karaoke_score.song.title %>
+    </h2>
 
-<p>
-  歌唱日:
-  <%= @karaoke_score.sung_at %>
-</p>
-
-<p>
-  機種:
-  <%= @karaoke_score.karaoke_machine&.upcase || "未選択" %>
-</p>
-
-<p>
-  メモ:
-  <%= @karaoke_score.memo.presence || "なし" %>
-</p>
-
+    <p class="text-sm text-slate-500 mt-1">
+      <%= @karaoke_score.song.artist.name %>
+    </p>
+  </div>
 <% if @karaoke_score.score_image.attached? %>
-  <h2>採点画像</h2>
+  <section class="bg-white border border-slate-200 rounded-xl p-6 mb-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">
+      採点画像
+    </h2>
 
-  <%= image_tag @karaoke_score.score_image, width: 500 %>
+    <%= image_tag @karaoke_score.score_image,
+        class: "w-full max-w-lg mx-auto h-auto rounded-lg",
+        alt: "採点結果の画像" %>
+  </section>
 <% end %>
+  <div class="space-y-5">
 
-<%= link_to "編集", edit_karaoke_score_path(@karaoke_score) %>
+    <div class="flex items-center justify-between gap-4">
+      <span class="text-sm text-slate-500">点数</span>
+      <span class="text-2xl font-bold text-blue-600">
+        <%= @karaoke_score.score %>
+        <span class="text-sm font-normal text-slate-500">点</span>
+      </span>
+    </div>
 
-<%= link_to "削除",
-    karaoke_score_path(@karaoke_score),
-    data: {
-      turbo_method: :delete,
-      turbo_confirm: "削除しますか？"
-    } %>
+    <div class="flex items-center justify-between gap-4">
+      <span class="text-sm text-slate-500">歌唱日</span>
+      <span class="font-medium text-slate-800">
+        <%= @karaoke_score.sung_at %>
+      </span>
+    </div>
 
-<p>
-  <%= link_to "一覧へ戻る", karaoke_scores_path %>
-</p>
+    <div class="flex items-center justify-between gap-4">
+      <span class="text-sm text-slate-500">機種</span>
+      <span class="bg-blue-50 text-blue-700 text-xs font-medium px-3 py-1 rounded-full">
+        <%= @karaoke_score.karaoke_machine&.upcase || "未選択" %>
+      </span>
+    </div>
+
+    <div class="border-t border-slate-100 pt-4">
+      <p class="text-sm text-slate-500 mb-2">メモ</p>
+      <p class="text-slate-800 whitespace-pre-wrap"><%= @karaoke_score.memo.presence || "なし" %></p>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="flex flex-wrap gap-3 mb-6">
+
+  <%= link_to "編集", edit_karaoke_score_path(@karaoke_score),
+      class: "inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+
+  <%= link_to "削除",
+      karaoke_score_path(@karaoke_score),
+      data: {
+        turbo_method: :delete,
+        turbo_confirm: "この採点結果を削除しますか？"
+      },
+      class: "inline-block bg-white border border-red-300 text-red-600 px-5 py-2 rounded-lg hover:bg-red-50 transition-colors" %>
+
+</div>
+
+<%= link_to "← 採点履歴へ戻る", karaoke_scores_path,
+    class: "inline-block text-sm text-slate-600 hover:text-blue-600 transition-colors" %>
+</div>

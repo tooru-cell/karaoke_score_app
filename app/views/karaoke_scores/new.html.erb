@@ -1,55 +1,9 @@
-<h1>採点結果登録</h1>
-
-<%= form_with model: @karaoke_score do |f| %>
-    <% if @karaoke_score.errors.any? %>
-    <div>
-    <h2>入力内容にエラーがあります</h2>
-
-    <ul>
-    <% @karaoke_score.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-    <% end %>
-    </ul>
-    </div>
-    <% end %>
-  <div>
-  <%= f.label :score_image, "採点画像" %>
-  <%= f.file_field :score_image %>
+<div = class="max-w-2xl mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold text-slate-800 mb-6">
+    採点結果登録
+  </h1>
+  <div class="bg-white boder border-slate-200 rounded-xl p-6">
+    <%= render "form" %>
   </div>
-
-  <div>
-    <%= f.label :song_id, "曲" %>
-    <div>
-        <%= f.label :artist_name, "アーティスト名" %>
-        <%= f.text_field :artist_name %>
-    </div>
-
-    <div>
-        <%= f.label :song_title, "曲名" %>
-        <%= f.text_field :song_title %>
-    </div>
-  </div>
-
-  <div>
-    <%= f.label :score, "点数" %>
-    <%= f.number_field :score, step: 0.001, min: 0, max: 100 %>
-  </div>
-
-  <div>
-    <%= f.label :sung_at, "歌唱日" %>
-    <%= f.date_field :sung_at %>
-  </div>
-
-  <div>
-    <%= f.label :karaoke_machine, "機種" %>
-    <%= f.select :karaoke_machine, [["DAM", "dam"],["JOYSOUND","joysound"]], {include_blank: "選択してください"} %>
-  </div>
-
-  <div>
-    <%= f.label :memo, "メモ" %>
-    <%= f.text_area :memo %>
-  </div>
-
-  <%= f.submit "登録" %>
-
-<% end %>
+  <%= link_to "← 採点履歴へ戻る", karaoke_scores_path, class: "include-block mt-4 text-sm text-slate-600 hover:text-blue-600" %>
+</div>
