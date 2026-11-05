@@ -3,6 +3,8 @@ class KaraokeScoresController < ApplicationController
   before_action :set_karaoke_score, only: %i[show edit update destroy]
   def index
     @q = current_user.karaoke_scores.ransack(params[:q])
+    @q.sorts = "sung_at desc" if @q.sorts.empty?
+
     @karaoke_scores = @q.result.includes(song: :artist)
   end
 

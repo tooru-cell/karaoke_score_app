@@ -26,6 +26,7 @@ RSpec.describe "Rankings", type: :request do
         expect(response.body).to include(song_a.title)
       end
 
+      
       it "最高点が同じ曲は同順位になり、次の曲は２位になる" do
         song_a = FactoryBot.create(:song)
         song_b = FactoryBot.create(:song)
@@ -45,10 +46,11 @@ RSpec.describe "Rankings", type: :request do
         ].each do |song, rank, score|
           expect(page).to have_css(
             "section:nth-of-type(1) div.flex.items-center.gap-3.py-4",
-            text: /#{rank}\s*#{Regexp.escape(song.title)}\s*#{Regexp.escape(score)}/
+            text: /#{rank}\s*#{Regexp.escape(song.title)}.*#{Regexp.escape(score)}/m
           )
         end
       end
+
 
       it "別のユーザーの採点結果が表示されないこと" do
         song_a = FactoryBot.create(:song,title:"曲A")

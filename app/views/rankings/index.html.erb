@@ -1,114 +1,126 @@
 
 <div class="max-w-5xl mx-auto px-4 pt-8 pb-24 md:pb-8">
+
   <h1 class="text-2xl font-bold text-slate-800 mb-6">
-    ランキング
+    👑 ランキング 👑
   </h1>
+
+  <!-- 最高得点ランキング -->
   <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
-  <h2 class="text-lg font-semibold text-slate-800">
-    高得点ランキング
-  </h2>
+    <h2 class="text-lg font-semibold text-slate-800">
+      🎵 高得点ランキング
+    </h2>
 
-  <p class="text-sm text-slate-500 mb-4">
-    曲ごとの最高点
-  </p>
+    <p class="text-sm text-slate-500 mb-4">
+      曲ごとの最高点（上位５曲）
+    </p>
 
-  <div class="divide-y divide-slate-100">
-    <% rank = 1 %>
-    <% previous_score = nil %>
+    <div class="divide-y divide-slate-100">
+      <% rank = 0 %>
+      <% previous_score = nil %>
 
-    <% @max_ranking.each do |song_id, score| %>
-      <% if score != previous_score && previous_score != nil %>
-        <% rank += 1 %>
+      <% @max_ranking.each do |song_id, score| %>
+        <% if score != previous_score %>
+          <% rank += 1 %>
+        <% end %>
+
+        <% previous_score = score %>
+
+        <div class="flex items-center gap-3 py-4">
+          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-700 font-semibold shrink-0">
+            <%= rank %>位
+          </span>
+
+          <div class="flex-1 min-w-0">
+            <%= link_to @song_titles[song_id], song_path(song_id),
+                class: "block font-medium text-slate-800 hover:text-blue-600 break-words" %>
+
+            <% if @max_dates[song_id] %>
+              <p class="text-xs text-slate-500 mt-1">
+                <%= @max_dates[song_id].strftime("%Y/%m/%d") %>
+              </p>
+            <% end %>
+          </div>
+
+          <span class="font-semibold text-blue-600 shrink-0">
+            <%= score %>点
+          </span>
+        </div>
       <% end %>
+    </div>
+  </section>
 
-      <% previous_score = score %>
+  <!-- 平均点ランキング -->
+  <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
+    <h2 class="text-lg font-semibold text-slate-800">
+      🎤 得意曲ランキング
+    </h2>
 
-      <div class="flex items-center gap-3 py-4">
-        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-700 font-semibold shrink-0">
-          <%= rank %>位
-        </span>
+    <p class="text-sm text-slate-500 mb-4">
+      平均点の高い楽曲（上位５曲）
+    </p>
 
-        <span class="flex-1 min-w-0 font-medium text-slate-800 break-words">
-          <%= @song_titles[song_id] %>
-        </span>
+    <div class="divide-y divide-slate-100">
+      <% rank = 0 %>
+      <% previous_score = nil %>
 
-        <span class="font-semibold text-blue-600 shrink-0">
-          <%= score %>点
-        </span>
-      </div>
-    <% end %>
-  </div>
-</section>
+      <% @average_ranking.each do |song_id, score| %>
+        <% if score != previous_score %>
+          <% rank += 1 %>
+        <% end %>
 
-<section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
-  <h2 class="text-lg font-semibold text-slate-800">
-    得意曲ランキング
-  </h2>
+        <% previous_score = score %>
 
-  <p class="text-sm text-slate-500 mb-4">
-    平均点の高い楽曲を集計しています
-  </p>
+        <div class="flex items-center gap-3 py-4">
+          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-700 font-semibold shrink-0">
+            <%= rank %>位
+          </span>
 
-  <div class="divide-y divide-slate-100">
-    <% rank = 1 %>
-    <% previous_score = nil %>
+          <%= link_to @song_titles[song_id], song_path(song_id),
+              class: "flex-1 min-w-0 font-medium text-slate-800 hover:text-blue-600 break-words" %>
 
-    <% @average_ranking.each do |song_id, score| %>
-      <% if score != previous_score && previous_score != nil %>
-        <% rank += 1 %>
+          <span class="font-semibold text-blue-600 shrink-0">
+            <%= score.round(2) %>点
+          </span>
+        </div>
       <% end %>
+    </div>
+  </section>
 
-      <% previous_score = score %>
+  <!-- 歌唱回数ランキング -->
+  <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">
+      💛 よく歌う曲ランキング
+    </h2>
 
-      <div class="flex items-center gap-3 py-4">
-        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-700 font-semibold shrink-0">
-          <%= rank %>位
-        </span>
+    <div class="divide-y divide-slate-100">
+      <% rank = 0 %>
+      <% previous_count = nil %>
 
-        <span class="flex-1 min-w-0 font-medium text-slate-800 break-words">
-          <%= @song_titles[song_id] %>
-        </span>
+      <% @count_ranking.each do |song_id, count| %>
+        <% if count != previous_count %>
+          <% rank += 1 %>
+        <% end %>
+        
+        <% previous_count = count %>
 
-        <span class="font-semibold text-blue-600 shrink-0">
-          <%= score.round(2) %>点
-        </span>
-      </div>
-    <% end %>
-  </div>
-</section>
-<section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
-  <h2 class="text-lg font-semibold text-slate-800 mb-4">
-    歌唱回数ランキング
-  </h2>
+        <div class="flex items-center gap-3 py-4">
+          <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-700 font-semibold shrink-0">
+            <%= rank %>位
+          </span>
 
-  <div class="divide-y divide-slate-100">
-    <% rank = 1 %>
-    <% previous_count = nil %>
+          <%= link_to @song_titles[song_id], song_path(song_id),
+              class: "flex-1 min-w-0 font-medium text-slate-800 hover:text-blue-600 break-words" %>
 
-    <% @count_ranking.each do |song_id, count| %>
-      <% if count != previous_count && previous_count != nil %>
-        <% rank += 1 %>
+          <span class="font-semibold text-blue-600 shrink-0">
+            <%= count %>回
+          </span>
+        </div>
       <% end %>
+    </div>
+  </section>
 
-      <% previous_count = count %>
+  <%= link_to "← 採点履歴へ戻る", karaoke_scores_path,
+      class: "inline-block text-sm text-slate-600 hover:text-blue-600 transition-colors" %>
 
-      <div class="flex items-center gap-3 py-4">
-        <span class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 text-blue-700 font-semibold shrink-0">
-          <%= rank %>位
-        </span>
-
-        <span class="flex-1 min-w-0 font-medium text-slate-800 break-words">
-          <%= @song_titles[song_id] %>
-        </span>
-
-        <span class="font-semibold text-blue-600 shrink-0">
-          <%= count %>回
-        </span>
-      </div>
-    <% end %>
-  </div>
-</section>
-
-<%= link_to "← 採点履歴へ戻る", karaoke_scores_path,
-    class: "inline-block text-sm text-slate-600 hover:text-blue-600 transition-colors" %>
 </div>

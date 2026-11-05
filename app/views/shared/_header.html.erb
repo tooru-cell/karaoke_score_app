@@ -6,6 +6,7 @@
         <% end %>
     <nav class="hidden md:flex items-center gap-4 text-sm">
         <% if logged_in? %>
+            <%= link_to "サマリー", summary_path,class: "text-slate-700 hover:text-blue-600 transition-colors" %>
             <%= link_to "採点履歴", karaoke_scores_path, class: "text-slate-600 hover:text-blue-600" %>
             <%= link_to "ランキング", rankings_path, class: "text-slate-600 hover:text-blue-600 " %>
             <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "text-slate-600 hover:text-blue-600" %>

@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
   get "/rankings", to: "rankings#index"
+  get "summary", to: "static_pages#summary"
   root "static_pages#top"
 
   resources :karaoke_scores
-  resources :songs, only: [ :show ]
+  resources :songs, only: [:show] do
+    member do
+      get :history
+    end
+  end
 
   resources :users, only: %i[new create]
 
