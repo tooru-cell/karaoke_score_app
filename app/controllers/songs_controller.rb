@@ -7,6 +7,10 @@ class SongsController < ApplicationController
     @scores = current_user.karaoke_scores
                           .where(song: @song)
                           .order(sung_at: :desc)
+    
+    @recent_scores = @scores
+                 .reorder(sung_at: :desc, id: :desc)
+                 .limit(3)
 
     @highest_score = @scores.maximum(:score)
     @average_score = @scores.average(:score)
@@ -60,4 +64,19 @@ class SongsController < ApplicationController
       { name: "JOYSOUND", data: labels.zip(joy_data) }
     ]
   end
+  
+  
+  def history
+    @song = Song.find(params[:id])
+
+    @q = current_user.karaoke_scores
+                     .where(song: @song)
+                     .ransack(params[:q])
+
+    @q.sorts = "sung_at desc" if @q.sorts.empty?
+
+    @scores = @q.result.order(id: :desc)
+  end
+
+
 end

@@ -49,18 +49,26 @@
     </div>
   <% end %>
 
+  
 <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
-  <h2 class="text-lg font-semibold text-slate-800 mb-4">
-    採点履歴
-  </h2>
+
+  <div class="flex items-center justify-between mb-4 gap-3">
+    <h2 class="text-lg font-semibold text-slate-800">
+      直近の歌唱履歴
+    </h2>
+
+    <span class="text-sm text-slate-500">
+      最新3件
+    </span>
+  </div>
 
   <div class="divide-y divide-slate-100">
-    <% @scores.each do |score| %>
+    <% @recent_scores.each do |score| %>
       <div class="flex items-center justify-between gap-4 py-4">
 
         <div class="min-w-0">
           <p class="text-sm text-slate-700">
-            <%= score.sung_at %>
+            <%= score.sung_at.strftime("%Y/%m/%d") %>
           </p>
 
           <span class="inline-block mt-2 text-xs font-medium bg-blue-50 text-blue-700 px-3 py-1 rounded-full">
@@ -77,54 +85,66 @@
       </div>
     <% end %>
   </div>
-</section>
 
-<section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
-  <h2 class="text-lg font-semibold text-slate-800 mb-4">
-    点数推移グラフ
-  </h2>
+  <% if @recent_scores.empty? %>
+    <p class="text-center text-slate-500 py-4">
+      まだ歌唱履歴がありません。
+    </p>
+  <% end %>
 
-  <div class="w-full">
-<div style="max-width: 600px;">
-  <%= line_chart @chart_data,
-  discrete: true,
-  width: "100%",
-  height: "300px",
-  library: {
-    scales: {
-      x: {
-        type: "category"
-      }
-    }
-  }
-%>
-</div>
+  <div class="mt-4 pt-4 border-t border-slate-100 text-right">
+    <%= link_to "すべての歌唱履歴を見る →",
+        history_song_path(@song),
+        class: "inline-block text-sm font-semibold text-blue-600 hover:text-blue-800" %>
   </div>
-</section>
-<section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
-  <h2 class="text-lg font-semibold text-slate-800 mb-4">
-  機種別点数推移グラフ
-  </h2>
 
-<div style="max-width: 600px;">
-  <%= line_chart @machine_chart_data,
-    discrete: true,
-    width: "100%",
-    height: "300px",
-    library: {
-      spanGaps: true,
-      scales: {
-        x: {
-          type: "category"
-        }
-      }
-    }
-  %>
-</div>
-  </div>
 </section>
 
-<%= link_to "← 採点履歴へ戻る", karaoke_scores_path,
-    class: "inline-block text-sm text-slate-600 hover:text-blue-600 transition-colors" %>
+
+  <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">
+      点数推移グラフ
+    </h2>
+
+    <div class="w-full">
+      <div style="max-width: 600px;">
+      <%= line_chart @chart_data,
+                    discrete: true,
+                    width: "100%",
+                    height: "300px",
+                    library: {
+                      scales: {
+                        x: {
+                          type: "category"
+                        }
+                      }
+                    }
+      %>
+      </div>
+    </div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">
+      機種別点数推移グラフ
+    </h2>
+
+    <div style="max-width: 600px;">
+      <%= line_chart @machine_chart_data,
+                    discrete: true,
+                    width: "100%",
+                    height: "300px",
+                    library: {
+                      spanGaps: true,
+                      scales: {
+                        x: {
+                          type: "category"
+                        }
+                      }
+                    }
+      %>
+    </div>
+  </section>
+
+  <%= link_to "← 採点履歴へ戻る", karaoke_scores_path,class: "inline-block text-sm text-slate-600 hover:text-blue-600 transition-colors" %>
 
 </div>

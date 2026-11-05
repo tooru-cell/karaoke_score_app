@@ -30,6 +30,7 @@
     <%= yield %>
     <% if logged_in? %>
       <%= render "shared/bottom_nav" %>
+      <%= link_to "サマリー", summary_path,class: "text-slate-700 hover:text-blue-600 transition-colors" %>
     <% end %>
   </body>
 </html>
