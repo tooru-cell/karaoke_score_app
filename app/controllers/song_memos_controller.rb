@@ -25,6 +25,6 @@ class SongMemosController < ApplicationController
   private
 
   def song_memo_params
-    params.require(:song_memo).permit(:song_title,:artist_name)
+    params.require(:song_memo).permit(:song_title, :artist_name)
   end
 end

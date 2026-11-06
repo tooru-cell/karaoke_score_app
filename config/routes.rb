@@ -4,18 +4,18 @@ Rails.application.routes.draw do
   root "static_pages#top"
 
   resources :karaoke_scores
-  resources :songs, only: [:show] do
+  resources :songs, only: [ :show ] do
     member do
       get :history
     end
   end
 
   resources :users, only: %i[new create]
-  
+
   get "account/edit", to: "users#edit", as: :edit_account
   patch "account", to: "users#update", as: :account
 
-  resources :song_memos, only: [:index, :create, :destroy]
+  resources :song_memos, only: [ :index, :create, :destroy ]
 
   get "login", to: "user_sessions#new"
   post "login", to: "user_sessions#create"
