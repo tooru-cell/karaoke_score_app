@@ -4,6 +4,12 @@ class StaticPagesController < ApplicationController
   def top
   end
 
+  def terms
+  end
+
+  def privacy
+  end
+
   def summary
     scores = current_user.karaoke_scores
 
