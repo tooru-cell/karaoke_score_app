@@ -3,6 +3,7 @@
   <h1 class="text-3xl font-bold text-blue-600 mb-6">
     すべての採点履歴
   </h1>
+  
 
   <!-- 検索・ソート -->
   <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
@@ -68,17 +69,18 @@
     </div>
   </section>
 
-  <!-- 検索結果 -->
   <section>
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-xl font-bold text-slate-800">
         🎵採点履歴
       </h2>
-
+    
       <%= link_to "＋ 新規登録", new_karaoke_score_path,
           class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
     </div>
-
+    <h2 class="text-sm text-slate-500 mt-1">
+      曲名をクリックで楽曲のサマリー、点数をクリックで個別の採点が見られます
+    </h2>
     <div class="space-y-3">
   <% @karaoke_scores.each do |score| %>
     <div class="bg-white border border-slate-200 rounded-xl p-4 hover:shadow-md transition-shadow">
@@ -121,10 +123,5 @@
   <% end %>
 </div>
   </section>
-
-  <div class="mt-6">
-    <%= link_to "👑ランキングを見る", rankings_path,
-        class: "inline-block bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-100" %>
-  </div>
-
+  <%= link_to "マイページへ戻る", mypage_path,class: "inline-block text-sm text-slate-600 hover:text-blue-600 transition-colors" %>
 </div>

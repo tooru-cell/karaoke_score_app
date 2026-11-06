@@ -1,0 +1,106 @@
+<div class="max-w-3xl mx-auto px-4 pt-8 pb-24 md:pb-8">
+
+  <h1 class="text-3xl font-bold text-blue-600 mb-6">
+    アカウント設定
+  </h1>
+
+  <p class="text-slate-500 mb-6">
+    ユーザー情報やパスワードを変更できます。
+  </p>
+
+  <section class="bg-white border border-slate-200 rounded-xl p-6">
+
+    <% if @user.errors.any? %>
+      <div class="bg-red-50 text-red-600 rounded-lg p-4 mb-6">
+        <ul class="list-disc pl-5">
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @user, url: account_path, method: :patch do |f| %>
+
+      <h2 class="text-xl font-bold text-slate-800 mb-5">
+        基本情報
+      </h2>
+
+      <div class="mb-5">
+        <%= f.label :name, "ユーザー名",
+            class: "block text-sm font-medium text-slate-700 mb-2" %>
+
+        <%= f.text_field :name,
+            class: "w-full border border-slate-300 rounded-lg px-3 py-2" %>
+      </div>
+
+      <div class="mb-5">
+        <%= f.label :email, "メールアドレス",
+            class: "block text-sm font-medium text-slate-700 mb-2" %>
+
+        <%= f.email_field :email,
+            class: "w-full border border-slate-300 rounded-lg px-3 py-2" %>
+      </div>
+
+      <div class="border-t border-slate-200 pt-6 mt-6">
+
+        <h2 class="text-xl font-bold text-slate-800 mb-2">
+          パスワード変更
+        </h2>
+
+        <p class="text-sm text-slate-500 mb-5">
+          パスワードを変更しない場合は空欄にしてください。
+        </p>
+
+        <div class="mb-5">
+          <%= f.label :password, "新しいパスワード",
+              class: "block text-sm font-medium text-slate-700 mb-2" %>
+
+          <%= f.password_field :password,
+              autocomplete: "new-password",
+              class: "w-full border border-slate-300 rounded-lg px-3 py-2" %>
+        </div>
+
+        <div class="mb-5">
+          <%= f.label :password_confirmation, "新しいパスワード（確認用）",
+              class: "block text-sm font-medium text-slate-700 mb-2" %>
+
+          <%= f.password_field :password_confirmation,
+              autocomplete: "new-password",
+              class: "w-full border border-slate-300 rounded-lg px-3 py-2" %>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 pt-6 mt-6">
+
+        <h2 class="text-xl font-bold text-slate-800 mb-2">
+          本人確認
+        </h2>
+
+        <p class="text-sm text-slate-500 mb-5">
+          変更を保存するには現在のパスワードが必要です。
+        </p>
+
+        <div class="mb-6">
+          <%= label_tag :current_password, "現在のパスワード",
+              class: "block text-sm font-medium text-slate-700 mb-2" %>
+
+          <%= password_field_tag :current_password, nil,
+              required: true,
+              autocomplete: "current-password",
+              class: "w-full border border-slate-300 rounded-lg px-3 py-2" %>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-end gap-3">
+
+        <%= link_to "キャンセル", mypage_path,
+            class: "px-5 py-2 border border-slate-300 rounded-lg text-slate-600 hover:bg-slate-100" %>
+
+        <%= f.submit "変更を保存",
+            class: "bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 cursor-pointer" %>
+      </div>
+
+    <% end %>
+  </section>
+</div>

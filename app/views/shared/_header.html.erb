@@ -1,20 +1,33 @@
+
 <header class="bg-white border-b border-slate-200">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-        <%= link_to root_path, class: "flex items-center gap-2" do %>
-            <span class="text-blue-600 text-2xl">♬</span>
-            <span class="text-xl font-bold text-slate-800">Karaoke Score</span>
-        <% end %>
-    <nav class="hidden md:flex items-center gap-4 text-sm">
-        <% if logged_in? %>
-            <%= link_to "何歌う？",song_memos_path,class: "text-slate-700 hover:text-blue-600 transition-colors" %>
-            <%= link_to "サマリー", summary_path,class: "text-slate-700 hover:text-blue-600 transition-colors" %>
-            <%= link_to "採点履歴", karaoke_scores_path, class: "text-slate-600 hover:text-blue-600" %>
-            <%= link_to "ランキング", rankings_path, class: "text-slate-600 hover:text-blue-600 " %>
-            <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "text-slate-600 hover:text-blue-600" %>
-        <% else %>
-            <%= link_to "ログイン", login_path, class: "text-slate-600 hover:text-blue-600" %>
-            <%= link_to "新規登録", new_user_path, class: "text-blue-600 font-medium hover:text-blue-700" %>
-        <% end %>
+  <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+
+    <%= link_to root_path, class: "flex items-center gap-2" do %>
+      <span class="text-blue-600 text-2xl">♬</span>
+      <span class="text-xl font-bold text-slate-800">
+        Karaoke Score
+      </span>
+    <% end %>
+
+    <nav class="hidden md:flex items-center gap-6 text-sm">
+      <% if logged_in? %>
+
+        <%= link_to "歌メモ", song_memos_path,
+            class: "text-slate-600 hover:text-blue-600 transition-colors" %>
+
+        <%= link_to "マイページ", mypage_path,
+            class: "text-slate-600 hover:text-blue-600 transition-colors" %>
+
+      <% else %>
+
+        <%= link_to "ログイン", login_path,
+            class: "text-slate-600 hover:text-blue-600" %>
+
+        <%= link_to "新規登録", new_user_path,
+            class: "text-blue-600 font-medium hover:text-blue-700" %>
+
+      <% end %>
     </nav>
-    </div>
+
+  </div>
 </header>

@@ -1,7 +1,18 @@
-<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200">
-    <div class="flex justify-around py-3">
-        <%= link_to "ホーム", root_path, class: "text-sm text-slate-600" %>
-        <%= link_to "採点履歴", karaoke_scores_path, class: "text-sm text-blue-600" %>
-        <%= link_to "ランキング", rankings_path, class: "text-sm text-slate-600" %>
-    </div>
+
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-slate-200">
+  <div class="flex justify-around items-center py-3">
+
+    <%= link_to song_memos_path,
+        class: "flex flex-col items-center gap-1 text-slate-600 hover:text-blue-600" do %>
+      <span class="text-xl">📝</span>
+      <span class="text-xs">歌メモ</span>
+    <% end %>
+
+    <%= link_to mypage_path,
+        class: "flex flex-col items-center gap-1 text-slate-600 hover:text-blue-600" do %>
+      <span class="text-xl">👤</span>
+      <span class="text-xs">マイページ</span>
+    <% end %>
+
+  </div>
 </nav>

@@ -2,10 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "Rankings", type: :request do
   describe "GET /rankings" do
-
     context "ログインしている場合" do
-      let(:user){ FactoryBot.create(:user) }
-      let(:user_b){ FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user) }
+      let(:user_b) { FactoryBot.create(:user) }
 
       before do
         post login_path, params: {
@@ -16,8 +15,8 @@ RSpec.describe "Rankings", type: :request do
       it "最高点と平均点が正しく表示されていること" do
         song_a = FactoryBot.create(:song)
 
-        FactoryBot.create(:karaoke_score, user:user, song:song_a, score:80)
-        FactoryBot.create(:karaoke_score, user:user, song:song_a, score:90)
+        FactoryBot.create(:karaoke_score, user: user, song: song_a, score: 80)
+        FactoryBot.create(:karaoke_score, user: user, song: song_a, score: 90)
 
         get rankings_path
 
@@ -26,7 +25,7 @@ RSpec.describe "Rankings", type: :request do
         expect(response.body).to include(song_a.title)
       end
 
-      
+
       it "最高点が同じ曲は同順位になり、次の曲は２位になる" do
         song_a = FactoryBot.create(:song)
         song_b = FactoryBot.create(:song)
@@ -40,9 +39,9 @@ RSpec.describe "Rankings", type: :request do
         page = Capybara.string(response.body)
 
         [
-          [song_a, "1位", "95.0点"],
-          [song_b, "1位", "95.0点"],
-          [song_c, "2位", "90.0点"]
+          [ song_a, "1位", "95.0点" ],
+          [ song_b, "1位", "95.0点" ],
+          [ song_c, "2位", "90.0点" ]
         ].each do |song, rank, score|
           expect(page).to have_css(
             "section:nth-of-type(1) div.flex.items-center.gap-3.py-4",
@@ -53,10 +52,10 @@ RSpec.describe "Rankings", type: :request do
 
 
       it "別のユーザーの採点結果が表示されないこと" do
-        song_a = FactoryBot.create(:song,title:"曲A")
-        song_b = FactoryBot.create(:song,title:"曲B")
-        FactoryBot.create(:karaoke_score, user:user, song:song_a, score:90)
-        FactoryBot.create(:karaoke_score, user:user_b, song:song_b, score:80)
+        song_a = FactoryBot.create(:song, title: "曲A")
+        song_b = FactoryBot.create(:song, title: "曲B")
+        FactoryBot.create(:karaoke_score, user: user, song: song_a, score: 90)
+        FactoryBot.create(:karaoke_score, user: user_b, song: song_b, score: 80)
         get rankings_path
         expect(response.body).to include(song_a.title)
         expect(response.body).not_to include(song_b.title)
@@ -75,9 +74,9 @@ RSpec.describe "Rankings", type: :request do
       page = Capybara.string(response.body)
 
       [
-        [song_a, "1位", "3回"],
-        [song_b, "1位", "3回"],
-        [song_c, "2位", "1回"]
+        [ song_a, "1位", "3回" ],
+        [ song_b, "1位", "3回" ],
+        [ song_c, "2位", "1回" ]
       ].each do |song, rank, count|
         expect(page).to have_css(
           "section:nth-of-type(3) div.flex.items-center.gap-3.py-4",

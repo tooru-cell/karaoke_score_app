@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   get "/rankings", to: "rankings#index"
-  get "summary", to: "static_pages#summary"
+  get "mypage", to: "static_pages#summary", as: :mypage
   root "static_pages#top"
 
   resources :karaoke_scores
-  resources :songs, only: [:show] do
+  resources :songs, only: [ :show ] do
     member do
       get :history
     end
@@ -12,7 +12,10 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[new create]
 
-  resources :song_memos, only: [:index, :create, :destroy]
+  get "account/edit", to: "users#edit", as: :edit_account
+  patch "account", to: "users#update", as: :account
+
+  resources :song_memos, only: [ :index, :create, :destroy ]
 
   get "login", to: "user_sessions#new"
   post "login", to: "user_sessions#create"
