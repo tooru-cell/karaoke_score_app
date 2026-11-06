@@ -1,6 +1,6 @@
 class SongMemosController < ApplicationController
   before_action :require_login
-  
+
   def index
     @song_memos = current_user.song_memos.order(created_at: :desc)
     @song_memo = current_user.song_memos.build
@@ -13,7 +13,7 @@ class SongMemosController < ApplicationController
     favorite_artist_id = artist_counts.max_by { |id, count| count }&.first
 
     @favorite_artist = Artist.find_by(id: favorite_artist_id)
-    
+
     @recommended_tracks = []
 
     if @favorite_artist
@@ -24,7 +24,7 @@ class SongMemosController < ApplicationController
                                 .where(songs: { artist_id: @favorite_artist.id })
                                 .pluck("songs.title")
 
-      
+
     memo_titles = current_user.song_memos
                               .where(artist_name: @favorite_artist.name)
                               .pluck(:song_title)
@@ -36,7 +36,6 @@ class SongMemosController < ApplicationController
     end.first(5)
 
     end
-
   end
 
 
