@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   get "mypage", to: "static_pages#summary", as: :mypage
   root "static_pages#top"
 
+  get "terms", to: "static_pages#terms", as: :terms
+  get "privacy", to: "static_pages#privacy", as: :privacy
+
   resources :karaoke_scores
   resources :songs, only: [ :show ] do
     member do
