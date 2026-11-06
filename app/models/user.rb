@@ -5,6 +5,8 @@ class User < ApplicationRecord
 
   has_many :karaoke_scores, dependent: :destroy
 
+  has_many :song_memos, dependent: :destroy
+
   validates :name, presence: true
 
   validates :email,

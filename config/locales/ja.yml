@@ -18,7 +18,10 @@ ja:
         name: "名前"
         email: "メールアドレス"
         password: "パスワード"
-        password_confirmation: "パスワード確認"        
+        password_confirmation: "パスワード確認"
+      song_memo:
+        song_title: "曲名"
+        artist_name: "アーティスト名"        
 
     errors:
       models:
