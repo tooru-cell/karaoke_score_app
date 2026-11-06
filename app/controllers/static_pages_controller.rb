@@ -17,5 +17,15 @@ class StaticPagesController < ApplicationController
                      .includes(song: :artist)
                      .order(sung_at: :desc, id: :desc)
                      .limit(3)
+
+    
+  @trophies = {
+    score_90: @max_score.to_f >= 90,
+    score_95: @max_score.to_f >= 95,
+    score_100: @max_score.to_f >= 100,
+    count_10: @total_scores >= 10,
+    songs_10: @total_songs >= 10
+  }
+
   end
 end

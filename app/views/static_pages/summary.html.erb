@@ -1,5 +1,35 @@
-
 <div class="max-w-5xl mx-auto px-4 pt-8 pb-24 md:pb-8">
+
+  <h1 class="text-3xl font-bold text-blue-600 mb-6">
+    マイページ
+  </h1>
+
+  <section class="bg-white border border-slate-200 rounded-xl p-6 mb-8">
+
+    <h2 class="text-xl font-bold text-slate-800 mb-4">
+      ユーザー情報
+    </h2>
+
+    <div class="flex items-center gap-4">
+
+      <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
+        <span class="text-2xl text-blue-600">
+          👤
+        </span>
+      </div>
+      <div>
+        <p class="text-lg font-semibold text-slate-800">
+          <%= current_user.name %>
+        </p>
+
+        <p class="text-sm text-slate-500 mt-1">
+          <%= current_user.email %>
+        </p>
+      </div>
+    </div>
+    <%= link_to "ユーザー情報を変更",edit_account_path,class: "block text-right text-blue-600 hover:text-blue-800 font-medium" %>
+  </section>
+
   <h1 class="text-3xl font-bold text-blue-600 mb-6">
     採点サマリー
   </h1>
@@ -31,8 +61,57 @@
     <% end %>
   </div>
 
+<section class="mt-8">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-bold text-slate-800">
+      🏆 実績
+    </h2>
+
+    <span class="text-sm text-slate-500">
+      <%= @trophies.values.count(true) %> / <%= @trophies.size %> 獲得
+    </span>
+  </div>
+
+  <% trophies = [
+    ["90点達成", "90点以上を記録", :score_90],
+    ["95点達成", "95点以上を記録", :score_95],
+    ["100点達成", "100点を記録", :score_100],
+    ["カラオケ常連", "採点記録10回", :count_10],
+    ["レパートリー豊富", "異なる楽曲10曲", :songs_10]
+  ] %>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+    <% trophies.each do |name, description, key| %>
+      <% achieved = @trophies[key] %>
+
+      <div class="bg-white border border-slate-200 rounded-xl p-4 text-center">
+        <div class="text-4xl mb-3 <%= achieved ? '' : 'grayscale opacity-40' %>">
+          🏆
+        </div>
+
+        <h3 class="font-semibold text-sm text-slate-800 mb-2">
+          <%= name %>
+        </h3>
+
+        <p class="text-xs text-slate-500 mb-3">
+          <%= description %>
+        </p>
+
+        <% if achieved %>
+          <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-3 py-1 rounded-full">
+            獲得済み
+          </span>
+        <% else %>
+          <span class="inline-block bg-slate-100 text-slate-500 text-xs px-3 py-1 rounded-full">
+            未獲得
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
+
   
-<!-- 最新の採点履歴 -->
 <section class="bg-white border border-slate-200 rounded-xl p-5 mt-6">
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-xl font-bold text-slate-800">
@@ -84,8 +163,68 @@
 </section>
 
 
-  <div class="mt-8">
-    <%= link_to "🎵すべての採点履歴を見る", karaoke_scores_path,
-        class: "inline-block bg-white border border-slate-300 text-slate-700 px-4 py-2 rounded-lg hover:bg-slate-100" %>
+  <%= link_to "すべての採点結果を見る", karaoke_scores_path, class: "include-block mt-4 text-sm text-slate-600 hover:text-blue-600" %>
+
+<section class="mt-8">
+  <h2 class="text-xl font-bold text-slate-800 mb-4">
+    メニュー
+  </h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+    <%= link_to karaoke_scores_path,
+        class: "bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow" do %>
+      <h3 class="font-semibold text-blue-600 mb-2">
+        🎵 採点履歴
+      </h3>
+      <p class="text-sm text-slate-500">
+        これまでの採点結果を確認する
+      </p>
+    <% end %>
+
+    <%= link_to rankings_path,
+        class: "bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow" do %>
+      <h3 class="font-semibold text-blue-600 mb-2">
+        👑 ランキング
+      </h3>
+      <p class="text-sm text-slate-500">
+        得意な曲や最高得点を確認する
+      </p>
+    <% end %>
+
+    <%= link_to song_memos_path,
+        class: "bg-white border border-slate-200 rounded-xl p-5 hover:shadow-md transition-shadow" do %>
+      <h3 class="font-semibold text-blue-600 mb-2">
+        📝 歌いたい曲メモ
+      </h3>
+      <p class="text-sm text-slate-500">
+        次に歌いたい曲をチェックする
+      </p>
+    <% end %>
+
   </div>
+
+
+  <section class="mt-8 bg-white border border-slate-200 rounded-xl p-5">
+    <h2 class="text-xl font-bold text-slate-800 mb-4">
+      アカウント設定
+    </h2>
+
+    <div class="space-y-4">
+
+      <%= link_to "パスワードを変更",
+          edit_account_path,
+          class: "block text-blue-600 hover:text-blue-800 font-medium" %>
+
+      <div class="border-t border-slate-200 pt-4">
+        <%= button_to "ログアウト",
+            logout_path,
+            method: :delete,
+            class: "text-red-600 hover:text-red-800 cursor-pointer",
+            form: { data: { turbo_confirm: "ログアウトしますか？" } } %>
+      </div>
+    </div>
+  </section>
+
+
 </div>

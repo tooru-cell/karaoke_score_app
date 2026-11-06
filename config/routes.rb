@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "/rankings", to: "rankings#index"
-  get "summary", to: "static_pages#summary"
+  get "mypage", to: "static_pages#summary", as: :mypage
   root "static_pages#top"
 
   resources :karaoke_scores
@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: %i[new create]
+  
+  get "account/edit", to: "users#edit", as: :edit_account
+  patch "account", to: "users#update", as: :account
 
   resources :song_memos, only: [:index, :create, :destroy]
 
