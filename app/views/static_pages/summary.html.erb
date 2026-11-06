@@ -1,49 +1,23 @@
 <div class="max-w-5xl mx-auto px-4 pt-8 pb-24 md:pb-8">
 
-  <h1 class="text-3xl font-bold text-blue-600 mb-6">
-    マイページ
+  <h1 class="text-4xl font-bold text-blue-600 mb-6">
+    👩マイページ
   </h1>
 
-  <section class="bg-white border border-slate-200 rounded-xl p-6 mb-8">
-
-    <h2 class="text-xl font-bold text-slate-800 mb-4">
-      ユーザー情報
-    </h2>
-
-    <div class="flex items-center gap-4">
-
-      <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
-        <span class="text-2xl text-blue-600">
-          👤
-        </span>
-      </div>
-      <div>
-        <p class="text-lg font-semibold text-slate-800">
-          <%= current_user.name %>
-        </p>
-
-        <p class="text-sm text-slate-500 mt-1">
-          <%= current_user.email %>
-        </p>
-      </div>
-    </div>
-    <%= link_to "ユーザー情報を変更",edit_account_path,class: "block text-right text-blue-600 hover:text-blue-800 font-medium" %>
-  </section>
-
   <h1 class="text-3xl font-bold text-blue-600 mb-6">
-    採点サマリー
+    💛採点サマリー
   </h1>
 
   <p class="text-slate-500 mb-6">
-    これまでのカラオケ記録を振り返りましょう。
+    これまでのカラオケ記録を振り返りましょう！
   </p>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
     <% [
-      ["最高点", @max_score ? "#{@max_score}点" : "記録なし"],
-      ["平均点", @average_score ? "#{@average_score.round(3)}点" : "記録なし"],
-      ["最低点", @min_score ? "#{@min_score}点" : "記録なし"],
+      ["総合最高点", @max_score ? "#{@max_score}点" : "記録なし"],
+      ["総合平均点", @average_score ? "#{@average_score.round(3)}点" : "記録なし"],
+      ["総合最低点", @min_score ? "#{@min_score}点" : "記録なし"],
       ["総採点回数", "#{@total_scores}回"],
       ["歌唱楽曲数", "#{@total_songs}曲"]
     ].each do |label, value| %>
@@ -60,6 +34,61 @@
 
     <% end %>
   </div>
+
+  <section class="bg-white border border-slate-200 rounded-xl p-5 mt-6">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-bold text-slate-800">
+      最新の採点履歴
+    </h2>
+
+    <span class="text-sm text-slate-500">
+      直近3件
+    </span>
+  </div>
+
+  <div class="divide-y divide-slate-200">
+    <% @recent_scores.each do |score| %>
+      <div class="flex justify-between items-center gap-3 py-4">
+
+        <div class="min-w-0">
+          <%= link_to score.song.title, song_path(score.song),
+              class: "block font-semibold text-slate-800 hover:text-blue-600 break-words" %>
+
+          <p class="text-sm text-slate-500 mt-1">
+            <%= score.song.artist.name %>
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3 mt-2">
+            <span class="text-xs text-slate-500">
+              <%= score.sung_at.strftime("%Y/%m/%d") %>
+            </span>
+
+            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+              <%= score.karaoke_machine&.upcase || "未選択" %>
+            </span>
+          </div>
+        </div>
+
+        <%= link_to karaoke_score_path(score),
+            class: "text-lg font-bold text-blue-600 hover:text-blue-800 shrink-0" do %>
+          <%= score.score %>点 ›
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+
+  <% if @recent_scores.empty? %>
+    <p class="text-slate-500 text-center py-4">
+      まだ採点履歴がありません。採点結果を登録してみよう！
+    </p>
+      
+  <% end %>
+</section>
+      <%= link_to "すべての採点結果を見る", karaoke_scores_path, class: "include-block mt-4 text-sm text-slate-600 hover:text-blue-600" %>
+      <div class="text-right">
+        <%= link_to "＋ 新規採点登録", new_karaoke_score_path,class: "inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700" %>
+      </div>
 
 <section class="mt-8">
   <div class="flex items-center justify-between mb-4">
@@ -109,61 +138,7 @@
       </div>
     <% end %>
   </div>
-</section>
-
-  
-<section class="bg-white border border-slate-200 rounded-xl p-5 mt-6">
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-xl font-bold text-slate-800">
-      最新の採点履歴
-    </h2>
-
-    <span class="text-sm text-slate-500">
-      直近3件
-    </span>
-  </div>
-
-  <div class="divide-y divide-slate-200">
-    <% @recent_scores.each do |score| %>
-      <div class="flex justify-between items-center gap-3 py-4">
-
-        <div class="min-w-0">
-          <%= link_to score.song.title, song_path(score.song),
-              class: "block font-semibold text-slate-800 hover:text-blue-600 break-words" %>
-
-          <p class="text-sm text-slate-500 mt-1">
-            <%= score.song.artist.name %>
-          </p>
-
-          <div class="flex flex-wrap items-center gap-3 mt-2">
-            <span class="text-xs text-slate-500">
-              <%= score.sung_at.strftime("%Y/%m/%d") %>
-            </span>
-
-            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
-              <%= score.karaoke_machine&.upcase || "未選択" %>
-            </span>
-          </div>
-        </div>
-
-        <%= link_to karaoke_score_path(score),
-            class: "text-lg font-bold text-blue-600 hover:text-blue-800 shrink-0" do %>
-          <%= score.score %>点 ›
-        <% end %>
-
-      </div>
-    <% end %>
-  </div>
-
-  <% if @recent_scores.empty? %>
-    <p class="text-slate-500 text-center py-4">
-      まだ採点履歴がありません。
-    </p>
-  <% end %>
-</section>
-
-
-  <%= link_to "すべての採点結果を見る", karaoke_scores_path, class: "include-block mt-4 text-sm text-slate-600 hover:text-blue-600" %>
+</section>  
 
 <section class="mt-8">
   <h2 class="text-xl font-bold text-slate-800 mb-4">
@@ -210,11 +185,27 @@
       アカウント設定
     </h2>
 
+        <div class="flex items-center gap-4">
+
+      <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
+        <span class="text-2xl text-blue-600">
+          👤
+        </span>
+      </div>
+      <div>
+        <p class="text-lg font-semibold text-slate-800">
+          <%= current_user.name %>
+        </p>
+
+        <p class="text-sm text-slate-500 mt-1">
+          <%= current_user.email %>
+        </p>
+      </div>
+    </div>
+
     <div class="space-y-4">
 
-      <%= link_to "パスワードを変更",
-          edit_account_path,
-          class: "block text-blue-600 hover:text-blue-800 font-medium" %>
+      <%= link_to "パスワード・ユーザー情報を変更",edit_account_path,class: "block text-right text-blue-600 hover:text-blue-800 font-medium" %>
 
       <div class="border-t border-slate-200 pt-4">
         <%= button_to "ログアウト",

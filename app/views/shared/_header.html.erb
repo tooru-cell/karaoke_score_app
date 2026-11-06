@@ -1,31 +1,30 @@
-
 <header class="bg-white border-b border-slate-200">
   <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
 
-    <%= link_to root_path, class: "flex items-center gap-2" do %>
-      <span class="text-blue-600 text-2xl">♬</span>
-      <span class="text-xl font-bold text-slate-800">
-        Karaoke Score
-      </span>
+    <% if logged_in? %>
+      <%= link_to mypage_path, class: "flex items-center gap-2" do %>
+        <span class="text-blue-600 text-2xl">♬</span>
+        <span class="text-xl font-bold text-slate-800">
+          Karaoke Score
+        </span>
+      <% end %>
+    <% else %>
+      <%= link_to root_path, class: "flex items-center gap-2" do %>
+        <span class="text-blue-600 text-2xl">♬</span>
+        <span class="text-xl font-bold text-slate-800">
+          Karaoke Score
+        </span>
+      <% end %>
     <% end %>
 
     <nav class="hidden md:flex items-center gap-6 text-sm">
       <% if logged_in? %>
-
-        <%= link_to "歌メモ", song_memos_path,
-            class: "text-slate-600 hover:text-blue-600 transition-colors" %>
-
-        <%= link_to "マイページ", mypage_path,
-            class: "text-slate-600 hover:text-blue-600 transition-colors" %>
-
+        <%= link_to "マイページ", mypage_path, class: "text-slate-600 hover:text-blue-600" %>
+        <%= link_to "採点履歴", karaoke_scores_path, class: "text-slate-600 hover:text-blue-600" %>
+        <%= link_to "+採点登録", new_karaoke_score_path, class: "text-slate-600 hover:text-blue-600" %>
       <% else %>
-
-        <%= link_to "ログイン", login_path,
-            class: "text-slate-600 hover:text-blue-600" %>
-
-        <%= link_to "新規登録", new_user_path,
-            class: "text-blue-600 font-medium hover:text-blue-700" %>
-
+        <%= link_to "ログイン", login_path, class: "text-slate-600 hover:text-blue-600" %>
+        <%= link_to "新規登録", new_user_path, class: "text-blue-600 font-medium hover:text-blue-700" %>
       <% end %>
     </nav>
 

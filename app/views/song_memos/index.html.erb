@@ -5,7 +5,7 @@
   </h1>
 
   <p class="text-slate-600 mb-6">
-    歌いたい曲をメモしよう
+    歌いたい曲をメモしよう！
   </p>
 
   <!-- メモ登録フォーム -->
@@ -97,11 +97,72 @@
       <% else %>
 
         <p class="bg-white rounded-xl p-6 text-center text-slate-500">
-          まだメモがありません。歌いたい曲を追加しましょう！
+          まだメモがありません。歌いたい曲を追加しよう！
         </p>
 
       <% end %>
     </div>
   </section>
     <%= link_to "マイページへ戻る", mypage_path,class: "inline-block text-sm text-slate-600 hover:text-blue-600 transition-colors" %>
-</div>
+
+
+<section class="bg-white border border-slate-200 rounded-xl p-5 mt-8">
+
+  <h2 class="text-xl font-bold text-slate-800 mb-2">
+    あなたへのおすすめ
+  </h2>
+
+  <% if @favorite_artist %>
+    <p class="text-sm text-slate-500 mb-5">
+      よく歌うアーティスト「<%= @favorite_artist.name %>」の楽曲からおすすめ
+    </p>
+  <% end %>
+
+  <% if @recommended_tracks.any? %>
+
+    <div class="divide-y divide-slate-200">
+
+      <% @recommended_tracks.each do |track| %>
+
+        <div class="flex items-center justify-between gap-3 py-4">
+
+          <div class="min-w-0">
+            <p class="font-semibold text-slate-800 break-words">
+              <%= track[:title] %>
+            </p>
+
+            <p class="text-sm text-slate-500 mt-1">
+              <%= track[:artist_name] %>
+            </p>
+          </div>
+
+          <%= button_to "＋ メモ",
+              song_memos_path,
+              method: :post,
+              params: {
+                song_memo: {
+                  song_title: track[:title],
+                  artist_name: track[:artist_name]
+                }
+              },
+              class: "bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 cursor-pointer shrink-0" %>
+
+        </div>
+
+      <% end %>
+
+    </div>
+
+  <% else %>
+    <p class="text-slate-500 text-center py-6">
+      現在おすすめできる曲がありません。
+    </p>
+  <% end %>
+
+  <p class="text-xs text-slate-400 mt-5">
+    楽曲情報提供：
+    <a href="https://www.last.fm/" target="_blank" rel="noopener noreferrer"
+       class="text-blue-600 hover:underline">Last.fm</a>
+  </p>
+
+</section>
