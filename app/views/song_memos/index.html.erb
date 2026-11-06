@@ -1,0 +1,107 @@
+<div class="max-w-5xl mx-auto px-4 pt-8 pb-24 md:pb-8">
+
+  <h1 class="text-3xl font-bold text-blue-600 mb-6">
+    🎵今日、何歌おう？
+  </h1>
+
+  <p class="text-slate-600 mb-6">
+    歌いたい曲をメモしておきましょう
+  </p>
+
+  <!-- メモ登録フォーム -->
+  <section class="bg-white border border-slate-200 rounded-xl p-5 mb-6">
+
+    <h2 class="text-xl font-bold text-slate-800 mb-4">
+      📝歌いたい曲を追加
+    </h2>
+
+    <% if @song_memo.errors.any? %>
+      <div class="bg-red-50 text-red-600 rounded-lg p-4 mb-4">
+        <ul class="list-disc pl-5">
+          <% @song_memo.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @song_memo do |f| %>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+        <div>
+          <%= f.label :song_title, "🎵曲名",
+              class: "block text-sm font-medium text-slate-700 mb-2" %>
+
+          <%= f.text_field :song_title,
+              placeholder: "曲名を入力",
+              class: "w-full border border-slate-300 rounded-lg px-3 py-2" %>
+        </div>
+
+        <div>
+          <%= f.label :artist_name, "🎤アーティスト名",
+              class: "block text-sm font-medium text-slate-700 mb-2" %>
+
+          <%= f.text_field :artist_name,
+              placeholder: "アーティスト名を入力",
+              class: "w-full border border-slate-300 rounded-lg px-3 py-2" %>
+        </div>
+
+      </div>
+
+      <div class="flex justify-end">
+        <%= f.submit "メモに追加",
+            class: "bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 cursor-pointer" %>
+      </div>
+
+    <% end %>
+  </section>
+
+  <!-- メモ一覧 -->
+  <section>
+    <h2 class="text-xl font-bold text-slate-800 mb-4">
+      歌いたい曲リスト
+    </h2>
+
+    <div class="space-y-3">
+
+      <% saved_song_memos = @song_memos.select(&:persisted?) %>
+
+      <% if saved_song_memos.any? %>
+        <% saved_song_memos.each do |memo| %>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-4 hover:shadow-md transition-shadow">
+
+            <div class="flex items-center justify-between gap-3">
+
+              <div class="min-w-0">
+                <p class="font-semibold text-slate-800 break-words">
+                  <%= memo.song_title %>
+                </p>
+
+                <p class="text-sm text-slate-500 mt-1 break-words">
+                  <%= memo.artist_name %>
+                </p>
+              </div>
+
+              <%= button_to "削除",
+                  song_memo_path(memo),
+                  method: :delete,
+                  form: { data: { turbo_confirm: "このメモを削除しますか？" } },
+                  class: "bg-red-50 text-red-600 px-4 py-2 rounded-lg hover:bg-red-100 cursor-pointer shrink-0" %>
+
+            </div>
+          </div>
+
+        <% end %>
+      <% else %>
+
+        <p class="bg-white rounded-xl p-6 text-center text-slate-500">
+          まだメモがありません。歌いたい曲を追加しましょう！
+        </p>
+
+      <% end %>
+    </div>
+  </section>
+
+</div>
